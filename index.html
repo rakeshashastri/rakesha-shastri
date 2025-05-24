@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rakesha Shastri</title>
+  <meta name="description" content="Rakesha Shastri — Engineering lead at Zoho, building native mobile apps. Writing about software, work, and life.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Rakesha Shastri">
+  <meta property="og:description" content="Engineering lead at Zoho, building native mobile apps. Writing about software, work, and life.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@rakeshashastri">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main id="main-content" class="content-container">
+
+    <section class="hero-section">
+      <img
+        src="https://avatars.githubusercontent.com/u/42436320?s=256&u=5758fb3d0f70eaf9677b8a9729ab560901cc4b25&v=4"
+        alt="Rakesha Shastri"
+        class="hero-photo"
+        width="88"
+        height="88"
+      >
+      <h1 class="hero-name">Rakesha Shastri</h1>
+      <div class="hero-bio">
+        <p>Born in Mangaluru, grew up in Thiruvananthapuram, now making a living in Chennai — three cities, three states, five languages along the way. I lead engineering at Zoho, building mobile apps and frameworks. Off the clock, it's cricket over every other game and two wheels over four.</p>
+        <p><strong>Jai Hind 🇮🇳</strong></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Writing</h2>
+        <a href="writing/index.html" class="section-link">All posts &rarr;</a>
+      </div>
+      <div id="recent-posts">
+        <p class="loading-text">Loading...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/shared.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      function formatDate(dateStr) {
+        var date = new Date(dateStr + 'T00:00:00');
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+      fetch('writing/posts.json')
+        .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function (posts) {
+          var container = document.getElementById('recent-posts');
+          if (!posts.length) {
+            container.innerHTML = '<p class="empty-text">No posts yet.</p>';
+            return;
+          }
+          posts.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+          var recent = posts.slice(0, 3);
+          container.innerHTML = recent.map(function (post) {
+            return (
+              '<article class="post-preview">' +
+              '  <h3><a href="writing/posts/' + post.slug + '.html">' + post.title + '</a></h3>' +
+              '  <p class="post-summary">' + post.summary + '</p>' +
+              '</article>'
+            );
+          }).join('');
+        })
+        .catch(function () {
+          var container = document.getElementById('recent-posts');
+          container.innerHTML = '<p class="empty-text">No posts yet.</p>';
+        });
+    })();
+  </script>
+</body>
+</html>
