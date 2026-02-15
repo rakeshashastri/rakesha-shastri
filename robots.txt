@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rakeshashastri.github.io/rakesha-shastri/sitemap.xml
